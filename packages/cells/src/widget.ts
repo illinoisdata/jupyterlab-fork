@@ -1817,6 +1817,12 @@ export namespace CodeCell {
           finished || new Date().toISOString();
         model.setMetadata('execution', timingInfo);
       }
+      await sessionContext.session?.kernel.requestExecute({code: "b = 7\n" +
+            "d = 6\n" +
+            "from ipylab import JupyterFrontEnd\n" +
+            "\n" +
+            "app = JupyterFrontEnd()\n" +
+            "app.commands.execute('docmanager:save')"},false).done
       return msg;
     } catch (e) {
       // If we started executing, and the cell is still indicating this
