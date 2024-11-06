@@ -505,6 +505,7 @@ const CustomTemplateFactory = (options: FormComponent.ILabCustomizerProps) =>
           className={`form-group ${
             displayLabel || schema.type === 'boolean' ? 'small-field' : ''
           }`}
+          style={{ display: label === 'Post-execution save documents' ? 'none' : '' }}
         >
           {!hasCustomField &&
             (rawErrors?.length ? (

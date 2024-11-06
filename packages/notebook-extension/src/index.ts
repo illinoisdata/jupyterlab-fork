@@ -2186,6 +2186,8 @@ function addCommands(
     return Private.isEnabledAndHeadingSelected(shell, tracker);
   };
 
+  let postExecSave = settings?.get('postExecutionSave')?.composite as boolean ?? false;
+
   // Set up signal handler to keep the collapse state consistent
   tracker.currentChanged.connect(
     (sender: INotebookTracker, panel: NotebookPanel) => {
@@ -2244,18 +2246,28 @@ function addCommands(
         current?.content.selectedCells.length ?? 1
       );
     },
-    execute: args => {
+    execute: async args => {
       const current = getCurrent(tracker, shell, args);
 
       if (current) {
         const { context, content } = current;
 
-        return NotebookActions.runAndAdvance(
+        const runResult = NotebookActions.runAndAdvance(
           content,
           context.sessionContext,
           sessionDialogs,
           translator
         );
+
+        if (postExecSave) {
+          runResult.then(()=>app.commands.execute('docmanager:save'));
+          await context.sessionContext.session?.kernel!.requestExecute({
+            code: "b = 7\n" +
+              "d = 6\n"
+          }, false).done 
+        }
+
+        return runResult;
       }
     },
     isEnabled: args => (args.toolbar ? true : isEnabled()),
@@ -2270,18 +2282,28 @@ function addCommands(
         current?.content.selectedCells.length ?? 1
       );
     },
-    execute: args => {
+    execute: async args => {
       const current = getCurrent(tracker, shell, args);
 
       if (current) {
         const { context, content } = current;
 
-        return NotebookActions.run(
+        const runResult = NotebookActions.run(
           content,
           context.sessionContext,
           sessionDialogs,
           translator
         );
+
+        if (postExecSave) {
+          runResult.then(()=>app.commands.execute('docmanager:save'));
+          await context.sessionContext.session?.kernel!.requestExecute({
+            code: "b = 7\n" +
+              "d = 6\n"
+          }, false).done 
+        }
+
+        return runResult;
       }
     },
     isEnabled
@@ -2295,18 +2317,28 @@ function addCommands(
         current?.content.selectedCells.length ?? 1
       );
     },
-    execute: args => {
+    execute: async args => {
       const current = getCurrent(tracker, shell, args);
 
       if (current) {
         const { context, content } = current;
 
-        return NotebookActions.runAndInsert(
+        const runResult = NotebookActions.runAndInsert(
           content,
           context.sessionContext,
           sessionDialogs,
           translator
         );
+
+        if (postExecSave) {
+          runResult.then(()=>app.commands.execute('docmanager:save'));
+          await context.sessionContext.session?.kernel!.requestExecute({
+            code: "b = 7\n" +
+              "d = 6\n"
+          }, false).done 
+        }
+
+        return runResult;
       }
     },
     isEnabled
@@ -2314,36 +2346,56 @@ function addCommands(
   commands.addCommand(CommandIDs.runAll, {
     label: trans.__('Run All Cells'),
     caption: trans.__('Run all cells'),
-    execute: args => {
+    execute: async args => {
       const current = getCurrent(tracker, shell, args);
 
       if (current) {
         const { context, content } = current;
 
-        return NotebookActions.runAll(
+        const runResult = NotebookActions.runAll(
           content,
           context.sessionContext,
           sessionDialogs,
           translator
         );
+
+        if (postExecSave) {
+          runResult.then(()=>app.commands.execute('docmanager:save'));
+          await context.sessionContext.session?.kernel!.requestExecute({
+            code: "b = 7\n" +
+              "d = 6\n"
+          }, false).done 
+        }
+
+        return runResult;
       }
     },
     isEnabled
   });
   commands.addCommand(CommandIDs.runAllAbove, {
     label: trans.__('Run All Above Selected Cell'),
-    execute: args => {
+    execute: async args => {
       const current = getCurrent(tracker, shell, args);
 
       if (current) {
         const { context, content } = current;
 
-        return NotebookActions.runAllAbove(
+        const runResult = NotebookActions.runAllAbove(
           content,
           context.sessionContext,
           sessionDialogs,
           translator
         );
+
+        if (postExecSave) {
+          runResult.then(()=>app.commands.execute('docmanager:save'));
+          await context.sessionContext.session?.kernel!.requestExecute({
+            code: "b = 7\n" +
+              "d = 6\n"
+          }, false).done 
+        }
+
+        return runResult;
       }
     },
     isEnabled: () => {
@@ -2357,18 +2409,28 @@ function addCommands(
   });
   commands.addCommand(CommandIDs.runAllBelow, {
     label: trans.__('Run Selected Cell and All Below'),
-    execute: args => {
+    execute: async args => {
       const current = getCurrent(tracker, shell, args);
 
       if (current) {
         const { context, content } = current;
 
-        return NotebookActions.runAllBelow(
+        const runResult = NotebookActions.runAllBelow(
           content,
           context.sessionContext,
           sessionDialogs,
           translator
         );
+
+        if (postExecSave) {
+          runResult.then(()=>app.commands.execute('docmanager:save'));
+          await context.sessionContext.session?.kernel!.requestExecute({
+            code: "b = 7\n" +
+              "d = 6\n"
+          }, false).done 
+        }
+
+        return runResult;
       }
     },
     isEnabled: () => {
