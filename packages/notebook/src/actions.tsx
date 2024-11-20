@@ -2546,7 +2546,14 @@ namespace Private {
       sessionDialogs,
       translator
     } satisfies INotebookCellExecutor.IRunCellOptions;
-    return executor ? executor.runCell(options) : defaultRunCell(options);
+    const result =  executor ? executor.runCell(options) : defaultRunCell(options);
+
+    /*
+      We can add logic here to call the relevent extension, which gives post execution save.
+      Unable to directly save here unless we pass in the Jupyter Frontend app object.
+    */
+
+    return result
   }
 
   /**
