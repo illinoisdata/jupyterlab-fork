@@ -2553,7 +2553,7 @@ namespace Private {
       Unable to directly save here unless we pass in the Jupyter Frontend app object.
     */
 
-      return result
+    return result
   }
 
   /**

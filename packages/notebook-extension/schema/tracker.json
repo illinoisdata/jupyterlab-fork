@@ -671,12 +671,6 @@
     }
   },
   "properties": {
-    "postExecutionSave": {
-      "type": "boolean",
-      "title": "Post-execution save documents",
-      "description": "Whether to save documents automatically after executing a cell",
-      "default": true
-    },
     "enableKernelInitNotification": {
       "title": "Notify about code execution if kernel is initializing",
       "description": "Display notification if code cells are run while kernel is initializing.",
