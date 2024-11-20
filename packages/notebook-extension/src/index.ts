@@ -2186,8 +2186,6 @@ function addCommands(
     return Private.isEnabledAndHeadingSelected(shell, tracker);
   };
 
-  let postExecSave = settings?.get('postExecutionSave')?.composite as boolean ?? false;
-
   // Set up signal handler to keep the collapse state consistent
   tracker.currentChanged.connect(
     (sender: INotebookTracker, panel: NotebookPanel) => {
